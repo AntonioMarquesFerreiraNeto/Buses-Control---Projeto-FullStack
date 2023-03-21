@@ -1,0 +1,132 @@
+﻿@using BusesControl.Models.Enums
+@model Contrato
+<link rel="stylesheet" href="~/css/Visualisar.css">
+<link rel="stylesheet" href="~/css/home.css">
+@if (TempData["MensagemDeErro"] != null) {
+    <div class="alert alert-danger" role="alert" style="margin-bottom: 3px;">
+        @TempData["MensagemDeErro"]
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+    </div>
+}
+<section class="principais">
+    <h3 id="titlePrincipal">
+        <hr class="text-hide">
+    </h3>
+    <form class="clientes" asp-controller="Contrato" asp-action="RevogarContrato" method="post">
+        <input type="hidden" asp-for="Id">
+        <div class="row view">
+            <label for="" class="titleModal">
+                <i class="fa fa-file-contract"></i>
+                Informações sobre o contrato
+                <hr style="margin-top: 5px;">
+            </label>
+            <div class="col-md-12">
+                <div class="row">
+                    @if (Model == null) {
+                        <div class="fil">
+                            <br> <br>
+                            <p>Não se preocupe, as informações registradas não serão alteradas! <br> Continue usando a aplicação normalmente.</p>
+                            <br> <br>
+                        </div>
+                    }
+                    else {
+                        <div class="fil">
+                            @if (Model.StatusContrato == ContratoStatus.Ativo) {
+                                <p><b>Status do contrato do cliente: </b>Ativo</p>
+                            }
+                            else {
+                                <p><b>Status do ônibus: </b>Inativo</p>
+                            }
+                            <p><b>Aprovação do contrato: </b>@Model.ReturnAprovacaoContrato()</p>
+                            <p style="display: flex;"><b>Detalhes de clientes PF/PJ: </b><a class="consult-clientes" data-target="#listClientes" data-toggle="modal"><i class="fa fa-users icon-detalhes"></i></a></p>
+                            <p><b>Detalhes motorista:</b> @Model.ReturnDetalhesMotorista()</p>
+                            <p><b>Detalhes ônibus:</b> @Model.ReturnDetalhesOnibus()</p>
+                        </div>
+                        <div class="fil">
+                            <p><b>Valor monetário do contrato:</b> R$ @Html.DisplayFor(model => model.ValorMonetario)</p>
+                            @if (Model.Pagament != ModelPagament.Avista) {
+                                <p><b>Quantidade de parcelas de pagamento:</b> @Html.DisplayFor(model => model.QtParcelas)</p>
+                            }
+                            else {
+                                <p><b>Contrato à vista:</b> PARCELA ÚNICA</p>
+                            }
+                            <p><b>Valor das parcelas do contrato: </b> R$ @Html.DisplayFor(model => model.ValorParcelaContrato)</p>
+                            <p><b>Valor das parcelas de cada cliente</b>: R$ @Html.DisplayFor(model => model.ValorParcelaContratoPorCliente)</p>
+                            <p>(<b>Emissão:</b> @Html.DisplayFor(model => model.DataEmissao))(<b>Vencimento</b>: @Html.DisplayFor(model => model.DataVencimento))</p>
+                        </div>
+                        <div id="listClientes" class="modal">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content modal-largura">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title font">Clientes requerentes</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body body-modal-alt">
+                                        <div class="col-md-12 input-group form-group form-it">
+                                            <table class="listClientes">
+                                                <tbody class="body-clientes">
+                                                    @foreach (var item in Model.ClientesContratos) {
+                                                        @if (!string.IsNullOrEmpty(item.PessoaFisicaId.ToString())) {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(x => item.PessoaFisica.Name)</td>
+                                                                <td>CPF: @item.PessoaFisica.ReturnCpfCliente()</td>
+                                                            </tr>
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(item.PessoaJuridicaId.ToString())) {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(x => item.PessoaJuridica.RazaoSocial)</td>
+                                                                <td>CNPJ: @item.PessoaJuridica.ReturnCnpjCliente()</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            @if (Model != null) {
+                <div class="long-detalhe">
+                    <br>
+                    <b>Detalhamento da rota de alocação:</b> @Html.DisplayFor(model => model.Detalhamento)
+                </div>
+            }
+        </div>
+        <div id="janelaConfirm" class="modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content modal-largura">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirmação</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Deseja realmente negar o contrato?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn filtra_btn">Sim</button>
+                        <button type="button" class="btn btn-secondary filtrar_btn2"
+                                data-dismiss="modal">
+                            Não
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <section class="container-button">
+        <a class="btn filtrar_btn voltar" style="color: white" asp-action="Index">Voltar</a>
+        <a class="btn filtrar_btn desa" style="color: white" data-target="#janelaConfirm" data-toggle="modal">Negar contrato</a>
+    </section>
+</section>
+<script src="~/js/jquery.min.js"></script>
+

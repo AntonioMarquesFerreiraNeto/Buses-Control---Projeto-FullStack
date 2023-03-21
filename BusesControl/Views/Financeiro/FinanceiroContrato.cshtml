@@ -1,0 +1,155 @@
+﻿@using BusesControl.Models.Enums
+@model Contrato
+<link rel="stylesheet" href="~/css/financeiro.css">
+<link rel="stylesheet" href="~/css/home.css">
+@if (TempData["MensagemDeSucesso"] != null) {
+    <div class="alert alert-success" role="alert">
+        @TempData["MensagemDeSucesso"]
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+    </div>
+}
+@if (TempData["MensagemDeErro"] != null) {
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemDeErro"]
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+    </div>
+}
+<section class="clientes">
+    <h3 id="bac">
+        <i class="fa fa-file-invoice-dollar"></i> @ViewData["Title"]
+        <hr style="margin-top: 3px;">
+    </h3>
+    <div class="cliente">
+        <div class="flex-item" style="margin-bottom: -2px;">
+            <div></div>
+            @if (Model.Andamento == Andamento.EmAndamento) {
+                <div><a class="btn-voltar" asp-action="Index">Voltar</a></div>
+            }
+            else {
+                <div><a class="btn-voltar" asp-action="ContratosEncerrados">Voltar</a></div>
+            }
+        </div>
+        <table id="table-contrato" class="table shadow-sm p-3 mb-5 bg-white rounded">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Total por cliente</th>
+                    <th scope="col">Parcela por cliente</th>
+                    <th scope="col">Controlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model != null) {
+                    @if (@Model.ClientesContratos.Any() && Model.ClientesContratos != null) {
+                        @foreach (var item in Model.ClientesContratos) {
+                            <tr>
+                                @if (!string.IsNullOrEmpty(item.PessoaFisicaId.ToString())) {
+                                    <td>@item.PessoaFisicaId</td>
+                                    <td>@item.PessoaFisica.Name</td>
+                                    @if (@item.PessoaFisica.Adimplente == Adimplencia.Adimplente) {
+                                        <td>@item.PessoaFisica.ReturnAdimplenciaCliente()</td>
+                                    }
+                                    else {
+                                        <td style="color: red">@item.PessoaFisica.ReturnAdimplenciaCliente()</td>
+                                    }
+                                    <td>@item.Contrato.ReturnValorTotCliente()</td>
+                                    <td>R$ @Html.DisplayFor(x => item.Contrato.ValorParcelaContratoPorCliente)</td>
+                                    <td>
+                                        <a class="btn-financeiro" asp-route-id="@item.Id" asp-action="Contabilizar"><i class="fa fa-arrow-alt-circle-right"></i> Contabilizações</a>
+                                        @if (Model.Andamento != Andamento.Encerrado) {
+                                            <a class="btn-recisao return-clienterescisao" data-target="#janelaConfirmRescisao" data-toggle="modal" href="#" clienterescisao-id="@item.Id"><i class="fa fa-minus-circle"></i> Rescisão</a>
+                                        }
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(item.PessoaJuridicaId.ToString())) {
+                                    <td>@item.PessoaJuridicaId</td>
+                                    <td>@item.PessoaJuridica.RazaoSocial</td>
+                                    @if (@item.PessoaJuridica.Adimplente == Adimplencia.Adimplente) {
+                                        <td>@item.PessoaJuridica.ReturnAdimplenciaCliente()</td>
+                                    }
+                                    else {
+                                        <td style="color: red">@item.PessoaJuridica.ReturnAdimplenciaCliente()</td>
+                                    }
+                                    <td>@item.Contrato.ReturnValorTotCliente()</td>
+                                    <td>R$ @Html.DisplayFor(x => item.Contrato.ValorParcelaContratoPorCliente)</td>
+                                    <td>
+                                        <a class="btn-financeiro" asp-route-id="@item.Id" asp-action="Contabilizar"><i class="fa fa-arrow-alt-circle-right"></i> Contabilizações</a>
+                                        @if (Model.Andamento != Andamento.Encerrado) {
+                                            <a class="btn-recisao return-clienterescisao" data-target="#janelaConfirmRescisao" data-toggle="modal" href="#" clienterescisao-id="@item.Id"><i class="fa fa-minus-circle"></i> Rescisão</a>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot class="footer-table">
+                <tr>
+                    <td colspan="3" id="table_valor"><b>Valor monetário total do contrato:</b> R$ @Html.DisplayFor(x => x.ValorMonetario)</td>
+                    @if (!string.IsNullOrEmpty(@Model.ValorTotalPagoContrato.ToString())) {
+                        <td colspan="3" id="table_valor"><b>Valor total pago do contrato:</b> R$ @Html.DisplayFor(x => x.ValorTotalPagoContrato)</td>
+                    }
+                    else {
+                        <td colspan="3" id="table_valor"><b>Valor total pago do contrato:</b> Ainda não realizado.</td>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+<div id="listClientesIndex" class="modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content modal-largura">
+            <div class="modal-header">
+                <h4 class="modal-title font">Clientes requerentes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <div id="list-clients" class="col-md-12 input-group form-group form-it">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/site.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('#table-contrato').DataTable({
+                "ordering": true,
+                "paging": true,
+                "pageLength": 7,
+                "searching": false,
+                "oLanguage": {
+                    "sEmptyTable": "Não existe registros no sistema.",
+                    "sInfo": "",
+                    "sInfoEmpty": "",
+                    "sInfoFiltered": "",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Sua pesquisa não encontrou nenhum registro correspondente.",
+                    "sSearch": "Pesquisar:  ",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+    </script>
+}
+    <script src="~/js/jquery.min.js"></script>

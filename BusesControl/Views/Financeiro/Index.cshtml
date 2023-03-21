@@ -1,0 +1,316 @@
+﻿@using BusesControl.Models.Enums
+@model BusesControl.Models.ViewModels.ModelsFinanceiroIndex
+<link rel="stylesheet" href="~/css/financeiro.css">
+<link rel="stylesheet" href="~/css/home.css">
+@if (TempData["MensagemDeSucesso"] != null) {
+    <div class="alert alert-success" role="alert">
+        @TempData["MensagemDeSucesso"]
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+    </div>
+}
+@if (TempData["MensagemDeErro"] != null) {
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemDeErro"]
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+    </div>
+}
+<section class="clientes">
+    <div class="container-dashboard return-val-financeiro" id="show-dash">
+    </div>
+    <h3 id="bac" style="color: darkorange;">
+        <i class="fa fa-file-invoice-dollar"></i> @ViewData["Title"]
+        <hr style="margin-top: 3px; width: 100%;">
+    </h3>
+    <div class="cliente">
+        <form style="margin: 0; padding: 0;" asp-action="PdfRelatorioFinanceiro" method="post">
+            <form style="margin: 0; padding: 0px;" asp-action="ReturnResultFiltros" method="post">
+                <div class="flex-item" style="margin-top: -12px; justify-content: flex-start; flex-wrap: wrap;">
+                    <div class="col-md-3 input-group form-group form-it" style="padding: 0;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-file-invoice-dollar"></i>
+                            </span>
+                        </div>
+                        <select id="fornecedor" class="form-control campUser" asp-for="Filtros.ReceitasDespesas">
+                            <optgroup label="Selecionar por tipo">
+                                <option value="todos">Todos</option>
+                                <option value="receitas">Receitas</option>
+                                <option value="despesas">Despesas</option>
+                                <option value="atrasados">Todos atrasados</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-3 input-group form-group form-it">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-calendar"></i>
+                            </span>
+                        </div>
+                        <select id="fornecedor" class="form-control campUser" asp-for="Filtros.DataFiltro">
+                            <optgroup label="Selecionar por data">
+                                <option value="não">Selecionar por data</option>
+                                <option value="emissão">Emissão do financeiro</option>
+                                <option value="vencimento">Vencimento da parcela</option>
+                                <option value="efetuação">Efetuação da parcela</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-3 input-group form-group form-it">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                        <input type="date" class="form-control" id="inputDate" asp-for="Filtros.DataInicial">
+                        <div class="legend-data">
+                            <small class="font-place">Data inicial.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 input-group form-group form-it" style="padding: 0;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                        <input type="date" class="form-control" id="inputDate" asp-for="Filtros.DataTermino">
+                        <div class="legend-data">
+                            <small class="font-place">Data término.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-item" style="margin-bottom: -7px; margin-top: -35px;">
+                    <div>
+                        <button type="submit" asp-action="ReturnResultFiltros" class="btn filtrar_btn enum"><i class="fa fa-filter"></i> Filtrar</button>
+                        <button type="button" class="btn filtrar_btn" data-toggle="modal" data-target="#optionsActions"><i class="fa fa-print"></i> Ações</button>
+                    </div>
+                    <div>
+                        <a asp-action="NovaReceita" asp-controller="Financeiro" class="btn filtrar_btn enum">+ Receita</a>
+                        <a asp-action="NovaDespesa" asp-controller="Financeiro" class="btn filtrar_btn terminado">+ Despesa</a>
+                    </div>
+                </div>
+                <div id="optionsActions" class="modal">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content modal-largura-2">
+                            <div class="modal-header">
+                                <h4 class="modal-title font">Exportações</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body body-modal-alt">
+                                <p>Olá, usuário. Baixe os dados em planilhas excel, ou emita relatórios em pdf.</p>
+                            </div>
+                            <div class="modal-footer" style="justify-content: space-between;">
+                                <button type="submit" asp-action="GetPlanilhaExcelFinanceiro" id="margin-botoes-modal" class="btn filtrar_btn enum"><i class="fa fa-file-excel"></i> Exportar tabela</button>
+                                <button type="submit" asp-action="PdfRelatorioFinanceiro" id="margin-botoes-modal" class="btn filtrar_btn"><i class="fa fa-print"></i> Imprimir relatório</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </form>
+        <table id="table-contrato" class="table shadow-sm p-3 mb-5 bg-white rounded display" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="font-size: 9pt;">ID</th>
+                    <th style="font-size: 9pt;">Contrato ID</th>
+                    <th style="font-size: 9pt;">Credor/Devedor</th>
+                    <th style="font-size: 9pt;">Status</th>
+                    <th style="font-size: 9pt;">Receita/Despesa</th>
+                    <th style="font-size: 9pt;">Val total</th>
+                    <th style="font-size: 9pt;">Val efetuado</th>
+                    <th style="font-size: 9pt;">Vencimento</th>
+                    <th style="font-size: 9pt;">Pagamento</th>
+                    <th style="font-size: 9pt;">Efetuar</th>
+                    <th style="font-size: 9pt;">Opção</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Financeiros != null || Model.Financeiros.Any()) {
+                    @foreach (var item in Model.Financeiros.OrderBy(x => x.DespesaReceita)) {
+                        <tr class="row-hover">
+                            <td>
+                                @if (item.Parcelas.Any(x => x.StatusPagamento == SituacaoPagamento.Atrasada)) {
+                                    <i class="fa fa-exclamation-circle span-style-alert-atrasada"></i>
+                                }
+                                else {
+                                    @item.Id;
+                                }
+                            </td>
+                            @if (!string.IsNullOrEmpty(item.ContratoId.ToString())) {
+                                <td>@item.ContratoId</td>
+                            }
+                            else {
+                                <td style="color: red;">Nulo</td>
+                            }
+                            <td>@item.ReturnNameClienteOrCredor()</td>
+                            @if (item.FinanceiroStatus == FinanceiroStatus.Ativo) {
+                                <td>@item.ReturnStatusFinanceiro()</td>
+                            }
+                            else {
+                                <td style="color: red;">@item.ReturnStatusFinanceiro()</td>
+                            }
+
+                            <td>@item.ReturnTypeFinanceiro()</td>
+                            <td>@item.ReturnValorTot()</td>
+                            <td>@item.ReturnValorTotEfetuado()</td>
+                            <td>@Html.DisplayFor(x => item.DataVencimento)</td>
+                            <td>@item.ReturnTypePagament()</td>
+                            <td>
+                                <a class="btn-financeiro" asp-route-id="@item.Id" asp-action="Contabilizar"><i class="fa fa-arrow-alt-circle-right"></i> Efetuar</a>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.ContratoId.ToString())) {
+                                    <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61)"></i></a>
+                                    <a class="link"><i class="fa fa-trash-alt" style="color: rgb(61, 61, 61)"></i></a>
+                                }
+                                else {
+                                    @if (item.FinanceiroStatus == FinanceiroStatus.Inativo) {
+                                        <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61)"></i></a>
+                                        <a class="link return-inativarlancamento" href="#" financeiro-id="@item.Id" data-target="#janelaConfirmInativar" data-toggle="modal">
+                                            <i class="fa fa-file-invoice-dollar"></i>
+                                        </a>
+                                    }
+                                    else {
+                                        @if (item.Parcelas.Any(x => x.StatusPagamento == SituacaoPagamento.PagamentoContabilizado)) {
+                                            <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61)"></i></a>
+                                        }
+                                        else {
+                                            <a class="link" asp-action="EditarLancamento" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                                        }
+                                        <a class="link-red return-inativarlancamento" href="#" financeiro-id="@item.Id" data-target="#janelaConfirmInativar" data-toggle="modal"><i class="fa fa-trash-alt"></i></a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+<div id="listClientesIndex" class="modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content modal-largura">
+            <div class="modal-header">
+                <h4 class="modal-title font">Clientes requerentes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <div id="list-clients" class="col-md-12 input-group form-group form-it">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="janelaConfirmInativar" class="modal">
+    <div class="modal-dialog modal-sm" id="contrato-inativar">
+    </div>
+</div>
+<script src="~/js/site.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/mascaraMoney.js"></script>
+<script src="~/Js copy/MascarDate.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#table-contrato thead tr')
+                .clone(true)
+                .addClass('filters')
+                .appendTo('#table-contrato thead');
+            var table = $('#table-contrato').DataTable({
+                "ordering": false,
+                "paging": true,
+                "searching": true,
+                "oLanguage": {
+                    "sEmptyTable": "Não existe registros no sistema.",
+                    "sInfo": "",
+                    "sInfoEmpty": "",
+                    "sInfoFiltered": "",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Sua pesquisa não encontrou nenhum registro correspondente.",
+                    "sSearch": "Pesquisar:  ",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                },
+                initComplete: function () {
+                    var api = this.api();
+
+                    // For each column
+                    api
+                        .columns()
+                        .eq(0)
+                        .each(function (colIdx) {
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            var title = $(cell).text();
+                            if (title == "Vencimento") {
+                                $(cell).html('<div class="table-pai"><input maxlength="10" onkeyup="mascara_data(this, this.value)" class="input-table" type="text" placeholder="' + title + '"/></div>');
+                            }
+                            else if (title == "Cliente") {
+                                $(cell).html('<div class="table-pai"></div>');
+                            }
+                            else if (title == "Val total") {
+                                $(cell).html('<div class="table-pai"><input class="input-table" onkeyup="mascaraMoeda(this, event)" type="text" placeholder="' + title + '" /></div>');
+                            }
+                            else if (title == "Val efetuado") {
+                                $(cell).html('<div class="table-pai"><input class="input-table" onkeyup="mascaraMoeda(this, event)" type="text" placeholder="' + title + '" /></div>');
+                            }
+                            else {
+                                $(cell).html('<div class="table-pai"><input class="input-table" type="text" placeholder="' + title + '" /></div>');
+                            }
+                            // On every keypress in this input
+                            $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                                .off('keyup change')
+                                .on('change', function (e) {
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != ''
+                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                : '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+                                })
+                                .on('keyup', function (e) {
+                                    e.stopPropagation();
+
+                                    $(this).trigger('change');
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
+                        });
+                },
+            });
+        });
+    </script>
+}

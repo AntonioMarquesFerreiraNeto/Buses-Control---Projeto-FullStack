@@ -1,0 +1,168 @@
+﻿@using BusesControl.Models.Enums
+@model Financeiro
+<link rel="stylesheet" href="~/css/financeiro.css">
+<link rel="stylesheet" href="~/css/home.css">
+@if (TempData["MensagemDeSucesso"] != null) {
+    <div class="alert alert-success" role="alert">
+        @TempData["MensagemDeSucesso"]
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+    </div>
+}
+@if (TempData["MensagemDeErro"] != null) {
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemDeErro"]
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+    </div>
+}
+<section class="clientes">
+    <h3 id="bac">
+        <i class="fa fa-file-invoice-dollar"></i> @ViewData["Title"]
+        <hr style="margin-top: 3px;">
+    </h3>
+    <div class="cliente">
+        <div class="flex-item" style="margin-bottom: -2px;">
+            <div>
+                @if (Model.PessoaFisica != null) {
+                    @if (!string.IsNullOrEmpty(Model.PessoaFisica.IdVinculacaoContratual.ToString())) {
+                        <a class="return-responsavel-2" href="#" clienteresponsavel-id="@Model.PessoaFisica.IdVinculacaoContratual.Value" data-target="#detalhesClienteResponsavel" data-toggle="modal"><i class="fa fa-user"></i>&nbsp;Responsável</a>
+                    }
+                }
+            </div>
+            <div style="display: flex; flex-wrap: wrap;">
+                <a class="btn filtrar_btn enum" asp-action="PdfRelatorioParcelas" asp-route-id="@Model.Id"><i class="fa fa-print"></i> Imprimir</a>
+                <a class="btn filtrar_btn" asp-action="Index">Voltar</a>
+            </div>
+        </div>
+        <table id="table-contrato" class="table shadow-sm p-3 mb-5 bg-white rounded">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome das parcelas</th>
+                    <th scope="col">Valor das parcelas</th>
+                    <th scope="col">Valor da taxa de juros</th>
+                    <th scope="col">Data de efetuação</th>
+                    <th scope="col">Data de vencimento</th>
+                    <th scope="col">Status da parcela</th>
+                    <th scope="col">Opções  </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.Parcelas != null && @Model.Parcelas.Any()) {
+                    @foreach (var item in Model.Parcelas) {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.ReturnNomeParcela()</td>
+                            <td>R$ @Html.DisplayFor(x => item.Financeiro.ValorParcelaDR)</td>
+                            @if (!string.IsNullOrEmpty(@item.ValorJuros.ToString())) {
+                                <td>R$ @Html.DisplayFor(x => @item.ValorJuros)</td>
+                            }
+                            else {
+                                <td>Insento de taxa de juros</td>
+                            }
+                            @if (!string.IsNullOrEmpty(@item.DataEfetuacao.ToString())) {
+                                <td>@Html.DisplayFor(x => @item.DataEfetuacao)</td>
+                            }
+                            else {
+                                <td>Não possui</td>
+                            }
+                            <td>@Html.DisplayFor(x => @item.DataVencimentoParcela)</td>
+                            <td>@item.ReturnStatusPagamento()</td>
+                            @if (item.StatusPagamento != SituacaoPagamento.PagamentoContabilizado) {
+                                <form style="margin: 0; padding: 0;" asp-action="Contabilizar" method="post">
+                                <td><button type="submit" class="financeiro-contabilizar" asp-route-parcelaId="@item.Id" asp-route-financeiroId="@Model.Id" asp-action="Contabilizar"><i class="fa fa-arrow-alt-circle-right"></i> Contabilizar</button></td>
+                                </form>
+                            }
+                            else {
+                                <td><a class="financeiro-contabilizado" style="color: white;"><i class="fa fa-check" style="font-size: 8pt;"></i> Contabilizado</a></td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+            <tfoot class="footer-table">
+                <tr>
+                    <td colspan="3" id="table_valor"><b>Valor total(por devedor/credor):</b> @Model.ReturnValorTot()</td>
+                    @if (!string.IsNullOrEmpty(@Model.ValorTotalPagoCliente.ToString())) {
+                        <td colspan="3" id="table_valor"><b>Valor total efetuado:</b> R$ @Html.DisplayFor(x => x.ValorTotalPagoCliente)</td>
+                    }
+                    else {
+                        <td colspan="3" id="table_valor"><b>Valor total efetuado:</b> Ainda não realizado.</td>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.ValorTotTaxaJurosPaga.ToString())) {
+                        <td colspan="2" id="table_valor"><b>Valor de taxas de juros efetuadas:</b> R$ @Html.DisplayFor(x => x.ValorTotTaxaJurosPaga)</td>
+                    }
+                    else {
+                        <td colspan="2" id="table_valor"><b>Valor de taxas de juros efetuadas:</b> não tem.</td>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+<div id="detalhesClienteResponsavel" class="modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-largura">
+            <div class="modal-header">
+                <h4 class="modal-title font">Cliente responsável</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="cliente-responsavel2" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="listClientesIndex" class="modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content modal-largura">
+            <div class="modal-header">
+                <h4 class="modal-title font">Clientes requerentes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <div id="list-clients" class="col-md-12 input-group form-group form-it">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/site.js"></script>
+<script src="~/js/jquery.min.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('#table-contrato').DataTable({
+                "ordering": false,
+                "pageLength": 6,
+                "paging": true,
+                "searching": false,
+                "oLanguage": {
+                    "sEmptyTable": "Não existe registros no sistema.",
+                    "sInfo": "",
+                    "sInfoEmpty": "",
+                    "sInfoFiltered": "",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Sua pesquisa não encontrou nenhum registro correspondente.",
+                    "sSearch": "Pesquisar:  ",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+    </script>
+}

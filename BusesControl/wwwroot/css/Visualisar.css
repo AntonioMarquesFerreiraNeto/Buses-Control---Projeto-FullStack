@@ -1,0 +1,255 @@
+﻿@charset "UTF-8";
+.body-modal-alt {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    background-color: ghostwhite;
+}
+.align-center{
+    text-align: center;
+}
+.clientes {
+    box-shadow: none;
+}
+.body-clientes {
+    text-align: center;
+}
+
+.body-modal-alt-2 {
+    max-height: calc(35vh - 70px);
+    overflow-y: auto;
+    background-color: ghostwhite;
+}
+
+.listClientes {
+    padding: 30px;
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 2px 2px 1px rgb(74, 74, 74, 0,96);
+}
+
+    .listClientes tr {
+        border: none;
+        border: 3px solid #F8F8FF;
+        margin: 2px;
+        padding: 10px;
+    }
+
+    .listClientes td {
+        border: none;
+        margin: 2px;
+        padding: 10px;
+    }
+
+.consult-clientes {
+    font-size: 12pt;
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: #0091ff;
+    width: 65px;
+    padding: 5px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #0088ef;
+    box-shadow: 1px 1px 2px rgb(0, 0, 0, 0,88);
+    transition: 1s;
+    -moz-animation: consult-clientes .75s linear infinite;
+    -o-animation: consult-clientes .75s linear infinite;
+    animation: consult-clientes .75s linear infinite;
+}
+
+    .consult-clientes:hover {
+        border: 1px solid darkblue;
+        background-color: blue;
+    }
+
+@keyframes consult-clientes {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.consult-clientes:hover {
+    background-color: blue;
+}
+
+.icon-detalhes {
+    color: white;
+}
+
+.clientes {
+    margin-top: 2px;
+    margin: auto;
+    width: 90%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid;
+    padding: 20px;
+}
+
+.row {
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.space {
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+.titleModal {
+    width: 40vh;
+    text-align: center;
+}
+
+p {
+    text-align: justify;
+}
+
+.container-button {
+    margin: auto;
+    margin-top: 15px;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-footer {
+    width: 99%;
+    padding-top: 57px;
+    margin: 2px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filtrar_btn {
+    font-size: 9pt;
+    padding: 9px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    background-color: transparent;
+    border: 1px solid rgb(0, 04, 112);
+    background-color: rgb(0, 34, 142);
+    transition: 01s;
+}
+
+    .filtrar_btn:hover {
+        background-color: rgb(0, 3, 83);
+    }
+
+
+.filtra_btn {
+    font-size: 9pt;
+    padding: 8px;
+    border: 1px solid rgb(0, 04, 112);
+    margin: 3px;
+    margin-bottom: 55px;
+    color: white;
+    background-color: rgb(0, 34, 142);
+    transition: 01s;
+}
+
+    .filtra_btn:hover {
+        color: white;
+        background-color: rgb(0, 3, 83);
+    }
+
+.filtrar_btn2 {
+    padding: 8px;
+    border: 1px solid darkred;
+    margin-bottom: 55px;
+    background-color: red;
+    transition: 0.4s;
+}
+
+    .filtrar_btn2:hover {
+        border: 1px solid darkred;
+        background-color: darkred;
+    }
+
+.voltar {
+    border: 1px solid rgb(0, 04, 112);
+}
+
+.desa {
+    border: 1px solid darkred;
+    background-color: red;
+}
+
+    .desa:hover {
+        background-color: darkred;
+    }
+
+.hab {
+    border: 1px solid forestgreen;
+    background-color: #02de00;
+}
+
+    .hab:hover {
+        background-color: forestgreen;
+    }
+
+.container-button {
+    display: flex;
+    justify-content: center;
+}
+
+.long-detalhe {
+    max-width: 400px;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+@media(min-width: 0px) {
+    .filtra_btn, .filtrar_btn2 {
+        width: 100px;
+        height: 33px;
+        font-size: 8pt;
+    }
+
+    .container-button {
+        flex-direction: column;
+    }
+
+    .filtrar_btn {
+        width: 100%;
+    }
+}
+
+@media(min-width: 510px) {
+
+    .filtra_btn, .filtrar_btn2 {
+        width: 110px;
+    }
+
+    .container-button {
+        flex-direction: row;
+    }
+
+    .filtrar_btn {
+        width: 155px;
+    }
+}
+
+@media(min-width: 768px) {
+
+    .filtra_btn, .filtrar_btn2 {
+        width: 114px;
+        font-size: 9pt;
+    }
+}

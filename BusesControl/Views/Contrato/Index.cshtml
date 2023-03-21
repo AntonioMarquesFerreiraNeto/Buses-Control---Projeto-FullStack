@@ -1,0 +1,313 @@
+﻿@using BusesControl.Models.Enums
+@model BusesControl.Models.ViewModels.ModelsContratoAndUsuario
+<link rel="stylesheet" href="~/css/contrato.css">
+<link rel="stylesheet" href="~/css/home.css">
+@if (TempData["MensagemDeSucesso"] != null) {
+    <div class="alert alert-success" role="alert">
+        @TempData["MensagemDeSucesso"]
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+    </div>
+}
+@if (TempData["MensagemDeErro"] != null) {
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemDeErro"]
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+    </div>
+}
+<section class="clientes">
+    <!--Cadastro, edição e desativação de clientes-->
+    @if (Model.Contratos.Any(x => x.StatusContrato == ContratoStatus.Ativo)) {
+        <h3 id="bac">
+            <i class="fa fa-file-contract"></i> @ViewData["Title"]
+            <hr style="margin-top: 3px;">
+        </h3>
+    }
+    else if (Model.Contratos.Any(x => x.StatusContrato == ContratoStatus.Inativo)) {
+        <h3 id="bac" style="color: red;">
+            <i class="fa fa-file-contract"></i> @ViewData["Title"]
+            <hr style="margin-top: 3px;">
+        </h3>
+    }
+    else {
+        <h3 id="bac">
+            <i class="fa fa-file-contract"></i> @ViewData["Title"]
+            <hr style="margin-top: 3px;">
+        </h3>
+    }
+    <div class="cliente">
+        <div class="flex-item">
+            <div>
+                <a asp-controller="Contrato" asp-action="Index" class="btn filtrar_btn enum">Ativos</a>
+                <a asp-controller="Contrato" asp-action="Inativos" class="btn filtrar_btn noCheck" type="submit">Inativos</a>
+            </div>
+            <div>
+                <a type="submit" class="btn filtrar_btn enum clear-list" asp-controller="Contrato" asp-action="NovoContrato">
+                    + Contrato
+                </a>
+                @if (Model.Contratos.Any(x => x.StatusContrato == ContratoStatus.Ativo)) {
+                    <button type="button" data-toggle="modal" data-target="#optionsActionsAtivos" class="btn filtrar_btn">
+                        <i class="fa fa-print"></i>
+                        Ações
+                    </button>
+                }
+                else {
+                    <button type="button" data-toggle="modal" data-target="#optionsActionsInativos" class="btn filtrar_btn">
+                        <i class="fa fa-print"></i>
+                        Ações
+                    </button>
+                }
+            </div>
+        </div>
+        <table id="table-contrato" class="table shadow-sm p-3 mb-5 bg-white rounded display" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th scope="col" style="font-size: 9pt;">Id</th>
+                    <th scope="col" style="font-size: 9pt;">Clientes</th>
+                    <th scope="col" style="font-size: 9pt;">Vencimento</th>
+                    <th scope="col" style="font-size: 9pt;">Valor total</th>
+                    <th scope="col" style="font-size: 9pt;">Pagamento</th>
+                    <th scope="col" style="font-size: 9pt;">Aprovação</th>
+                    <th scope="col" style="font-size: 9pt;">Andamento</th>
+                    <th scope="col" style="font-size: 9pt;">Opção</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Contratos != null || Model.Contratos.Any()) {
+                    @foreach (var item in Model.Contratos.OrderBy(x => x.Andamento)) {
+                        <tr class="row-hover">
+                            <td style="position: relative;">
+                                @if (item.Aprovacao == StatusAprovacao.EmAnalise && (item == Model.Contratos.Last(x => x.Aprovacao == StatusAprovacao.EmAnalise) || item.DataEmissao.Value.Date == DateTime.Now.Date)) {
+                                    <i class="fa fa-exclamation-circle span-style-alert-analise"></i>
+                                }
+                                else {
+                                    @item.Id
+                                }
+                            </td>
+                            <td class="align-content-center justify-content-center">
+                                <a class="consult-clientes btn-view-client" contrato-id="@item.Id" data-target="#listClientesIndex" data-toggle="modal"><i class="fa fa-users icon-detalhes"></i></a>
+                            </td>
+                            <td>@Html.DisplayFor(x => @item.DataVencimento)</td>
+                            <td>R$ @Html.DisplayFor(x => @item.ValorMonetario)</td>
+                            <td>@item.ReturnTypePagament()</td>
+                            <td>@item.ReturnAprovacaoContrato()</td>
+                            <td>@item.ReturnSituacaoContrato()</td>
+                            <td>
+                                @if (@item.StatusContrato == ContratoStatus.Ativo) {
+                                    @if (item.Andamento != Andamento.Encerrado) {
+                                        <a class="link clear-list" asp-route-id="@item.Id" asp-action="EditarContrato"><i class="fa fa-edit"></i></a>
+                                    }
+                                    else {
+                                        <a style="color: rgb(61, 61, 61)" class="link"><i class="fa fa-edit"></i></a>
+                                    }
+                                    <a class="link-trash" asp-route-id="@item.Id" asp-action="Inativar"><i class="fa fa-trash-alt"></i></a>
+                                    @if (Model.Usuario.Cargos == CargoFuncionario.Administrador) {
+                                        @if (item.Aprovacao == StatusAprovacao.Aprovado) {
+                                            @if (item.Andamento != Andamento.Encerrado) {
+                                                <a class="link btn-view-client-pdf" contrato-id-pdf="@item.Id" data-target="#listClientesContrato" data-toggle="modal" href="#"><i class="fa fa-print"></i></a>
+                                            }
+                                            else {
+                                                <a style="color: rgb(61, 61, 61)" class="link"><i class="fa fa-print"></i></a>
+                                            }
+                                        }
+                                        else if (item.Aprovacao == StatusAprovacao.EmAnalise) {
+                                            <a class="link-sucess return-modal-aprovacao" contrato-id="@item.Id" data-target="#AprovacaoContrato" data-toggle="modal" href="#"><i class="fa fa-bars"></i></a>    
+                                        }
+                                        else if (item.Aprovacao == StatusAprovacao.Negado) {
+                                            <a class="link-sucess" asp-route-id="@item.Id" asp-action="AprovarContrato"><i class="fa fa-check"></i></a>
+                                        }
+                                    }
+                                }
+                                else {
+                                    <a class="link" asp-route-id="@item.Id" asp-action="Ativar"><i class="fa fa-file-contract"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+<div id="optionsActionsAtivos" class="modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-largura-2">
+            <div class="modal-header">
+                <h4 class="modal-title font">Exportações</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <p>Olá, usuário. Baixe os dados em planilhas excel, ou emita relatórios em pdf.</p>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <a asp-controller="Contrato" asp-action="GetRelatorioExcelAtivos" id="margin-botoes-modal" class="btn filtrar_btn enum"><i class="fa fa-file-excel"></i> Exportar tabela</a>
+                <a asp-controller="Contrato" asp-action="PdfContratosAtivos" id="margin-botoes-modal" class="btn filtrar_btn"><i class="fa fa-print"></i> Imprimir relatório</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="optionsActionsInativos" class="modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-largura-2">
+            <div class="modal-header">
+                <h4 class="modal-title font">Exportações</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <p>Olá, usuário. Baixe os dados em planilhas excel, ou emita relatórios em pdf.</p>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <a asp-controller="Contrato" asp-action="GetRelatorioExcelInativos" id="margin-botoes-modal" class="btn filtrar_btn enum"><i class="fa fa-file-excel"></i> Exportar tabela</a>
+                <a type="submit" asp-controller="Contrato" asp-action="PdfContratosInativos" id="margin-botoes-modal" class="btn filtrar_btn"><i class="fa fa-print"></i> Imprimir relatório</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="listClientesIndex" class="modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content modal-largura">
+            <div class="modal-header">
+                <h4 class="modal-title font">Clientes requerentes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <div id="list-clients" class="col-md-12 input-group form-group form-it">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="janelaConfirmRescisao" class="modal">
+    <div class="modal-dialog modal-sm" id="cliente-rescisao">
+        <div>
+        </div>
+    </div>
+</div>
+<div id="AprovacaoContrato" class="modal">
+    <div class="modal-dialog modal-sm" id="show-aprovacao">
+    </div>
+</div>
+
+<div id="listClientesContrato" class="modal">
+    <div class="modal-dialog modal-lg" style="width: 100%;">
+        <div class="modal-content modal-largura">
+            <div class="modal-header">
+                <h4 class="modal-title font">Impressões de contrato e rescisões</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-modal-alt">
+                <div id="list-clients-pdf" class="col-md-12 input-group form-group form-it">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/site.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/mascaraMoney.js"></script>
+<script src="~/Js copy/MascarDate.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#table-contrato thead tr')
+                .clone(true)
+                .addClass('filters')
+                .appendTo('#table-contrato thead');
+            var table = $('#table-contrato').DataTable({
+                "ordering": false,
+                "paging": true,
+                "searching": true,
+                "oLanguage": {
+                    "sEmptyTable": "Não existe registros no sistema.",
+                    "sInfo": "",
+                    "sInfoEmpty": "",
+                    "sInfoFiltered": "",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Sua pesquisa não encontrou nenhum registro correspondente.",
+                    "sSearch": "Pesquisar:  ",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                },
+                initComplete: function () {
+                    var api = this.api();
+
+                    // For each column
+                    api
+                        .columns()
+                        .eq(0)
+                        .each(function (colIdx) {
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            var title = $(cell).text();
+                            if (title == "Vencimento") {
+                                $(cell).html('<div class="table-pai"><input maxlength="10" onkeyup="mascara_data(this, this.value)" class="input-table" type="text" placeholder="' + title + '"/></div>');
+                            }
+                            else if (title == "Clientes") {
+                                $(cell).html('<div class="table-pai"></div>');
+                            }
+                            else if (title == "Valor total") {
+                                $(cell).html('<div class="table-pai"><input class="input-table" onkeyup="mascaraMoeda(this, event)" type="text" placeholder="' + title + '" /></div>');
+                            }
+                            else {
+                                $(cell).html('<div class="table-pai"><input class="input-table" type="text" placeholder="' + title + '" /></div>');
+                            }
+                            // On every keypress in this input
+                            $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                                .off('keyup change')
+                                .on('change', function (e) {
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != ''
+                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                : '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+                                })
+                                .on('keyup', function (e) {
+                                    e.stopPropagation();
+
+                                    $(this).trigger('change');
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
+                        });
+                },
+            });
+        });
+    </script>
+}

@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="~/LogoIcon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Buses Control - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/datatables.min.css">
+</head>
+
+<body onLoad="carregando()">
+    <div class="main-louding">
+        <div class="louding">
+            <img  src="~/css/Imagens/logoLouding.png" alt="espere..." class="logoLouding">
+            <div class="animation-bar"></div>
+        </div>
+    </div>
+    <div id="carregado" class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar" class="active">
+            <h1><a class="logo"><span class="fa fa-bus"></span></a></h1>
+            @await Component.InvokeAsync("Menu")
+            <div class="footer">
+                <p style="text-align: justify;">
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> <a href="" class="text-white" style="text-decoration: underline;">Todos os direitos reservados.</a>  | <a href="" class="text-white" style="text-decoration: underline;">Política de uso da aplicação.</a>
+                </p>
+            </div>
+        </nav>
+        <!-- Page Content  -->
+        <div id="content" class="p-0 p-md-0 body-bus" role="main">
+            @await Component.InvokeAsync("MenuSec")
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/popper.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/js/Pre-Louding.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>
