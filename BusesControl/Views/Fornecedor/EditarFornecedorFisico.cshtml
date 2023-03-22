@@ -5,14 +5,14 @@
 @if (TempData["MensagemDeErro"] != null) {
     <div class="alert alert-danger" role="alert">
         @TempData["MensagemDeErro"]
-        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 @if (TempData["MensagemDeInfo"] != null) {
     <a class="consult-flow-info" onclick="ViewInfo()"><i class="fa fa-info icon-detalhes"></i></a>
     <div class="alert alert-info" role="alert">
         @TempData["MensagemDeInfo"]
-        <button type="button" class="btn btn-danger btn-sm close-alert info" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert info" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 <section class="clientes">

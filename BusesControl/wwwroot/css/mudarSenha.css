@@ -76,61 +76,80 @@ body {
     display: flex;
     justify-content: center;
 }
-.alert-info{
+.alert-info {
     opacity: 0;
-    transition: 1s;
+    color: white;
+    background-color: rgb(0, 174, 182);
+    border: 1px solid rgb(0, 174, 182);
 }
 .alert {
-    padding: 10px;
     position: absolute;
-    z-index: 1;
-    top: 28px;
-    box-shadow: 1px 1px 2px #0000009e;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    top: 19px;
+    min-height: 46px;
+    min-width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 11pt;
 }
 
 .close-alert {
     position: absolute;
+    border-radius: 100%;
+    top: -13px;
     right: -15px;
-    top: -15px;
-    text-align: center;
-    border-radius: 35px;
-    border: 1px solid #72a67e;
-    box-shadow: 1px 1px 1px #0000009e;
-    color: black;
-    width: 30px;
-    height: 30px;
-    transition: 0.5s;
+    width: 33px;
+    height: 33px;
+    color: white;
+}
+
+.alert-success {
+    color: white;
+    background-color: rgb(0, 131, 0);
+    border: 1px solid rgb(0, 131, 0);
 }
 
 .sucesso {
-    background-color: #c5f0cf;
+    background-color: rgb(0, 111, 0);
+    border: 1px solid rgb(0, 110, 0);
 }
 
     .sucesso:hover {
-        border: 1px solid #72a67e;
-        background-color: #7ea588;
+        background-color: rgb(0, 81, 0);
+        border: 1px solid rgb(0, 81, 0);
     }
 
-.erro {
-    background-color: #F14E55;
+.alert-danger {
     color: white;
-    border: none;
+    background-color: rgb(191, 0, 0);
+    border: 1px solid rgb(191, 0, 0);
 }
 
-    .erro:hover {
-        border: none;
-        background-color: #CA0009;
+.error {
+    color: white;
+    background-color: rgb(73, 0, 0);
+    border: 1px solid rgb(73, 0, 0);
+}
+
+    .error:hover {
+        color: white;
+        background-color: rgb(43, 0, 0);
+        border: 1px solid rgb(43, 0, 0);
     }
 
+
 .info {
-    border: none;
+    background-color: rgb(0, 172, 159);
+    border: 1px solid rgb(0, 172, 159);
     color: white;
-    background-color: rgb(43, 177, 215);
 }
 
     .info:hover {
-        border: none;
-        background-color: rgb(43, 147, 162);
+        background-color: rgb(0, 152, 159);
+        border: 1px solid rgb(0, 152, 159);
     }
 
 .form-control {

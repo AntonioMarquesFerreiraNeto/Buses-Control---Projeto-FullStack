@@ -5,32 +5,32 @@
 @if (TempData["MensagemDeSucesso"] != null) {
     <div class="alert alert-success" role="alert">
         @TempData["MensagemDeSucesso"]
-        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 @if (TempData["MensagemDeErro"] != null) {
     <div class="alert alert-danger" role="alert">
         @TempData["MensagemDeErro"]
-        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 <section class="clientes">
     <!--Cadastro, edição e desativação de clientes-->
     @if (Model.Any(x => x.Status == StatuFuncionario.Habilitado)) {
         <h3 id="bac">
-            <i class="fa fa-users"></i> @ViewData["Title"]
+            <i class="fa fa-users-gear"></i> @ViewData["Title"]
             <hr style="margin-top: 3px;">
         </h3>
     }
     else if (Model.Any(x => x.Status == StatuFuncionario.Desabilitado)) {
         <h3 id="bac" style="color: red;">
-            <i class="fa fa-users"></i> @ViewData["Title"]
+            <i class="fa fa-users-gear"></i> @ViewData["Title"]
             <hr style="margin-top: 3px;">
         </h3>
     }
     else {
         <h3 id="bac">
-            <i class="fa fa-users"></i> @ViewData["Title"]
+            <i class="fa fa-users-gear"></i> @ViewData["Title"]
             <hr style="margin-top: 3px;">
         </h3>
     }
@@ -74,7 +74,7 @@
                             }
                             <td>
                                 @if (funcionario.Status == StatuFuncionario.Habilitado) {
-                                    <a class="link" asp-action="EditarFuncionario" asp-route-id="@funcionario.Id"><i class="fa fa-edit"></i></a>
+                                    <a class="link" asp-action="EditarFuncionario" asp-route-id="@funcionario.Id"><i class="fa fa-edit" style="font-size: 12pt;"></i></a>
                                     <a class="link-trash" asp-action="Desabilitar" asp-route-id="@funcionario.Id"><i class="fa fa-user-slash"></i></a>
                                     @if (funcionario.Cargos == CargoFuncionario.Assistente || funcionario.Cargos == CargoFuncionario.Administrador) {
                                         @if (funcionario.StatusUsuario == UsuarioStatus.Ativado) {

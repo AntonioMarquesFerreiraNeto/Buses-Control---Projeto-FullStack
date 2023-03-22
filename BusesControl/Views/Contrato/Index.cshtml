@@ -63,6 +63,7 @@
                 <tr>
                     <th scope="col" style="font-size: 9pt;">Id</th>
                     <th scope="col" style="font-size: 9pt;">Clientes</th>
+                    <th scope="col" style="font-size: 9pt;">Quant. clientes</th>
                     <th scope="col" style="font-size: 9pt;">Vencimento</th>
                     <th scope="col" style="font-size: 9pt;">Valor total</th>
                     <th scope="col" style="font-size: 9pt;">Pagamento</th>
@@ -86,6 +87,7 @@
                             <td class="align-content-center justify-content-center">
                                 <a class="consult-clientes btn-view-client" contrato-id="@item.Id" data-target="#listClientesIndex" data-toggle="modal"><i class="fa fa-users icon-detalhes"></i></a>
                             </td>
+                            <td>@item.ClientesContratos.Count</td>
                             <td>@Html.DisplayFor(x => @item.DataVencimento)</td>
                             <td>R$ @Html.DisplayFor(x => @item.ValorMonetario)</td>
                             <td>@item.ReturnTypePagament()</td>
@@ -94,7 +96,7 @@
                             <td>
                                 @if (@item.StatusContrato == ContratoStatus.Ativo) {
                                     @if (item.Andamento != Andamento.Encerrado) {
-                                        <a class="link clear-list" asp-route-id="@item.Id" asp-action="EditarContrato"><i class="fa fa-edit"></i></a>
+                                        <a class="link clear-list" asp-route-id="@item.Id" asp-action="EditarContrato"><i class="fa fa-edit" style="font-size: 12pt;"></i></a>
                                     }
                                     else {
                                         <a style="color: rgb(61, 61, 61)" class="link"><i class="fa fa-edit"></i></a>
@@ -110,15 +112,15 @@
                                             }
                                         }
                                         else if (item.Aprovacao == StatusAprovacao.EmAnalise) {
-                                            <a class="link-sucess return-modal-aprovacao" contrato-id="@item.Id" data-target="#AprovacaoContrato" data-toggle="modal" href="#"><i class="fa fa-bars"></i></a>    
+                                            <a class="link-analise return-modal-aprovacao" contrato-id="@item.Id" data-target="#AprovacaoContrato" data-toggle="modal" href="#"><i class="fa fa-sliders"></i></a>
                                         }
                                         else if (item.Aprovacao == StatusAprovacao.Negado) {
-                                            <a class="link-sucess" asp-route-id="@item.Id" asp-action="AprovarContrato"><i class="fa fa-check"></i></a>
+                                            <a class="link-sucess" asp-route-id="@item.Id" asp-action="AprovarContrato"><i class="fa fa-circle-check"></i></a>
                                         }
                                     }
                                 }
                                 else {
-                                    <a class="link" asp-route-id="@item.Id" asp-action="Ativar"><i class="fa fa-file-contract"></i></a>
+                                    <a class="link" asp-route-id="@item.Id" asp-action="Ativar"><i class="fa fa-file-circle-check"></i></a>
                                 }
                             </td>
                         </tr>
@@ -129,7 +131,7 @@
     </div>
 </section>
 <div id="optionsActionsAtivos" class="modal">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-md">
         <div class="modal-content modal-largura-2">
             <div class="modal-header">
                 <h4 class="modal-title font">Exportações</h4>
@@ -148,7 +150,7 @@
     </div>
 </div>
 <div id="optionsActionsInativos" class="modal">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-md">
         <div class="modal-content modal-largura-2">
             <div class="modal-header">
                 <h4 class="modal-title font">Exportações</h4>
@@ -167,7 +169,7 @@
     </div>
 </div>
 <div id="listClientesIndex" class="modal">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content modal-largura">
             <div class="modal-header">
                 <h4 class="modal-title font">Clientes requerentes</h4>
@@ -189,7 +191,7 @@
     </div>
 </div>
 <div id="AprovacaoContrato" class="modal">
-    <div class="modal-dialog modal-sm" id="show-aprovacao">
+    <div class="modal-dialog modal-md" id="show-aprovacao">
     </div>
 </div>
 

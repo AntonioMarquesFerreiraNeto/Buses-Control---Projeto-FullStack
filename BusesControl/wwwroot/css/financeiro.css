@@ -44,22 +44,32 @@ label {
     flex-wrap: wrap;
     margin-top: -34px;
     margin-bottom: -26px;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
 }
 
 .alert-primary {
+    min-width: 27%;
     display: flex;
+    justify-content: center;
     margin-left: 3px;
-    padding: 5px;
+    padding: 7px;
     border-radius: 5px;
-    border: 1px solid #0077d1;
+    color: white;
+    background-color: #7ec3f5;
+    border: 1px solid #7ec3f5;
 }
 
 .alert-warning {
     display: flex;
+    justify-content: center;
+    min-width: 27%;
     margin-left: 3px;
-    padding: 6px;
+    padding: 7px;
     border-radius: 5px;
-    border: 1px solid rgb(255, 110, 1);
+    color: white;
+    background-color: rgb(252, 201, 51);
+    border: 1px solid rgb(252, 201, 51);
 }
 
 th {
@@ -556,7 +566,6 @@ input#form-control {
     top: 23px;
     right: 15px;
     font-size: 9pt;
-    color: red;
 }
 
 .form-it .i-detalhe small {

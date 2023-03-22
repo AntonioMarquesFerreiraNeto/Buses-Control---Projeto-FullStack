@@ -9,6 +9,10 @@
     margin-top: -10px;
     margin-bottom: 30px;
 }
+.link-analise {
+    color: rgb(36, 231, 243);
+    margin: 10px;
+}
 .span-style-alert-analise {
     margin: 0;
     padding: 0;
@@ -421,7 +425,6 @@ input#form-control {
     top: 23px;
     right: 15px;
     font-size: 9pt;
-    color: red;
 }
 
 .form-it .i-detalhe small {

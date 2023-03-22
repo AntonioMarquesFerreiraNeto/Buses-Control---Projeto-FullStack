@@ -13,7 +13,7 @@
     @if (TempData["MensagemDeErro"] != null) {
         <div class="alert alert-danger" role="alert">
             @TempData["MensagemDeErro"]
-            <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+            <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
         </div>
     }
 </div>
@@ -21,7 +21,7 @@
     @if (TempData["MensagemDeSucesso"] != null) {
         <div class="alert alert-success" role="alert">
             @TempData["MensagemDeSucesso"]
-            <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+            <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> <i class="fa fa-xmark"></i>  </button>
         </div>
     }
 </div>
@@ -29,7 +29,7 @@
     @if (TempData["MensagemDeInfo"] != null) {
         <div class="alert alert-info" role="alert">
             @TempData["MensagemDeInfo"]
-            <button type="button" class="btn btn-danger btn-sm close-alert info" aria-label="Close"> X </button>
+            <button type="button" class="btn btn-danger btn-sm close-alert info" aria-label="Close"> <i class="fa fa-xmark"></i>  </button>
         </div>
     }
 </div>

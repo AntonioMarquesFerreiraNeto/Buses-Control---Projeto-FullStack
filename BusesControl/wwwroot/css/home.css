@@ -1,6 +1,8 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Numans');
-
+.form-it .i small {
+    color: rgb(255, 124, 0);
+}
 body {
     margin: 0;
     padding: 0;
@@ -36,7 +38,9 @@ body {
     align-content: center;
     justify-content: center;
 }
-
+.altura-minima-container {
+    min-height: 230px;
+}
 .card {
     margin: auto;
     background-color: transparent;
@@ -167,62 +171,74 @@ body {
     top: 87px;
     position: absolute;
     z-index: 1;
+    width: auto;
+    height: 46px;
+    min-width: 300px;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .alert-info {
     opacity: 0;
-    border: 1px solid rgb(154, 197, 209, 0,51);
+    color: white;
+    background-color: rgb(0, 174, 182);
+    border: 1px solid rgb(0, 174, 182);
 }
 
 .alert-danger {
-    box-shadow: 1px 1px 2px #7c7c7c36;
+    color: white;
+    font-size: 11pt;
+    background-color: rgb(204, 57, 52);
+    border: 1px solid rgb(204, 57, 52);
 }
 
 .close-alert {
     position: absolute;
+    border-radius: 100%;
+    top: -13px;
     right: -15px;
-    top: -16px;
-    text-align: center;
-    border-radius: 35px;
-    box-shadow: 1px 1px 2px #7c7c7c70;
-    border: 1px solid #72a67e;
-    color: black;
-    width: 30px;
-    height: 31px;
+    width: 33px;
+    height: 33px;
+    color: white;
     transition: 0.5s;
 }
-
-.sucesso {
-    background-color: #01ba27;
-    border: none;
+.alert-success {
     color: white;
+    font-size: 11pt;
+    background-color: rgb(0, 151, 0);
+    border: 1px solid rgb(0, 151, 0);
+}
+.sucesso {
+    background-color: rgb(0, 100, 0);
+    border: 1px solid rgb(0, 100, 0);
 }
 
     .sucesso:hover {
-        border: none;
-        background-color: darkgreen;
+        background-color: rgb(0, 81, 0);
+        border: 1px solid rgb(0, 81, 0);
     }
 
 .erro {
-    background-color: #F14E55;
     color: white;
-    border: none;
+    background-color: rgb(174, 57, 52);
+    border: 1px solid rgb(174, 57, 52);
 }
 
     .erro:hover {
-        border: none;
-        background-color: #CA0009;
+        color: white;
+        background-color: rgb(134, 7, 2);
+        border: 1px solid rgb(134, 7, 2);
     }
 
 .info {
-    border: none;
+    border: 1px solid rgb(0, 154, 182);
     color: white;
-    background-color: rgb(43, 177, 215);
+    background-color: rgb(0, 154, 182);
 }
 
     .info:hover {
-        border: none;
-        background-color: rgb(43, 147, 162);
+        border: 1px solid rgb(0, 134, 182);
+        background-color: rgb(0, 134, 182);
     }
 
 #sidebarCollapse {

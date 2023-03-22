@@ -5,13 +5,13 @@
 @if (TempData["MensagemDeSucesso"] != null) {
     <div class="alert alert-success" role="alert">
         @TempData["MensagemDeSucesso"]
-        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 @if (TempData["MensagemDeErro"] != null) {
     <div class="alert alert-danger" role="alert">
         @TempData["MensagemDeErro"]
-        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 <section class="clientes">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div id="optionsActions" class="modal">
-                    <div class="modal-dialog modal-sm">
+                    <div class="modal-dialog modal-md">
                         <div class="modal-content modal-largura-2">
                             <div class="modal-header">
                                 <h4 class="modal-title font">Exportações</h4>
@@ -161,22 +161,22 @@
                             </td>
                             <td>
                                 @if (!string.IsNullOrEmpty(item.ContratoId.ToString())) {
-                                    <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61)"></i></a>
+                                    <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61); font-size: 12pt;"></i></a>
                                     <a class="link"><i class="fa fa-trash-alt" style="color: rgb(61, 61, 61)"></i></a>
                                 }
                                 else {
                                     @if (item.FinanceiroStatus == FinanceiroStatus.Inativo) {
-                                        <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61)"></i></a>
+                                        <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61); font-size: 12pt;"></i></a>
                                         <a class="link return-inativarlancamento" href="#" financeiro-id="@item.Id" data-target="#janelaConfirmInativar" data-toggle="modal">
                                             <i class="fa fa-file-invoice-dollar"></i>
                                         </a>
                                     }
                                     else {
                                         @if (item.Parcelas.Any(x => x.StatusPagamento == SituacaoPagamento.PagamentoContabilizado)) {
-                                            <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61)"></i></a>
+                                            <a class="link"><i class="fa fa-edit" style="color: rgb(61, 61, 61); font-size: 12pt;"></i></a>
                                         }
                                         else {
-                                            <a class="link" asp-action="EditarLancamento" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                                            <a class="link" asp-action="EditarLancamento" asp-route-id="@item.Id"><i class="fa fa-edit" style="font-size: 12pt;"></i></a>
                                         }
                                         <a class="link-red return-inativarlancamento" href="#" financeiro-id="@item.Id" data-target="#janelaConfirmInativar" data-toggle="modal"><i class="fa fa-trash-alt"></i></a>
                                     }
@@ -206,7 +206,7 @@
     </div>
 </div>
 <div id="janelaConfirmInativar" class="modal">
-    <div class="modal-dialog modal-sm" id="contrato-inativar">
+    <div class="modal-dialog modal-md" id="contrato-inativar">
     </div>
 </div>
 <script src="~/js/site.js"></script>

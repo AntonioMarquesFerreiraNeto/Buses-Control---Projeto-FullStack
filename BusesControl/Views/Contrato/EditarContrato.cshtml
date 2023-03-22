@@ -6,13 +6,13 @@
 @if (TempData["MensagemDeErro"] != null) {
     <div class="alert alert-danger" role="alert">
         @TempData["MensagemDeErro"]
-        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 @if (TempData["MensagemDeInfo"] != null) {
     <div class="alert alert-info" role="alert">
         @TempData["MensagemDeInfo"]
-        <button type="button" class="btn btn-danger btn-sm close-alert info" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert info" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 <section class="clientes">
@@ -238,7 +238,7 @@
                                 }
                             </optgroup>
                         </select>
-                        <button type="button" class="consult-flow input-id-cliente"><i class="fa fa-plus icon-detalhes"></i></button>
+                        <button type="button" class="consult-flow input-id-cliente" style="color: white;">✚</button>
                     </div>
                 }
                 @if (Model.Contrato.Aprovacao != StatusAprovacao.Aprovado) {

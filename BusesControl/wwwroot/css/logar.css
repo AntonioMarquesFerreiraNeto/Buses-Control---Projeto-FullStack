@@ -31,48 +31,63 @@ body{
     display: flex;
     justify-content: center;
 }
+
 .alert {
-    padding: 10px;
     position: absolute;
-    z-index: 1;
-    top: 18px;
-    box-shadow: 1px 1px 2px #0000009e;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    top: 19px;
+    height: 46px;
+    min-width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 11pt;
 }
 
 .close-alert {
     position: absolute;
+    border-radius: 100%;
+    top: -13px;
     right: -15px;
-    top: -17px;
-    text-align: center;
-    border-radius: 35px;
-    border: 1px solid #72a67e;
-    box-shadow: 1px 1px 1px #0000009e;
-    color: black;
-    width: 30px;
-    height: 31px;
-    transition: 0.5s;
+    width: 33px;
+    height: 33px;
+    color: white;
+}
+
+.alert-success {
+    color: white;
+    background-color: rgb(0, 131, 0);
+    border: 1px solid rgb(0, 131, 0);
 }
 
 .sucesso {
-    background-color: #0aac3f;
-    border: none;
-    color: white;
+    background-color: rgb(0, 111, 0);
+    border: 1px solid rgb(0, 110, 0);
 }
 
     .sucesso:hover {
-        border: none;
-        background-color: #028a32;
+        background-color: rgb(0, 81, 0);
+        border: 1px solid rgb(0, 81, 0);
     }
 
-.erro {
-    background-color: #F14E55;
+.alert-danger {
     color: white;
-    border: none;
+    background-color: rgb(191, 0, 0);
+    border: 1px solid rgb(191, 0, 0);
 }
 
-    .erro:hover {
-        border: none;
-        background-color: #CA0009;
+.error {
+    color: white;
+    background-color: rgb(133, 0, 0);
+    border: 1px solid rgb(133, 0, 0);
+}
+
+    .error:hover {
+        color: white;
+        background-color: rgb(83, 0, 0);
+        border: 1px solid rgb(83, 0, 0);
     }
 
 .form-control{

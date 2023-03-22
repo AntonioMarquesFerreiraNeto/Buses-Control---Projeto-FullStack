@@ -5,13 +5,13 @@
 @if (TempData["MensagemDeSucesso"] != null) {
     <div class="alert alert-success" role="alert">
         @TempData["MensagemDeSucesso"]
-        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 @if (TempData["MensagemDeErro"] != null) {
     <div class="alert alert-danger" role="alert">
         @TempData["MensagemDeErro"]
-        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 <section class="clientes">
@@ -54,7 +54,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">Placa</th>
                     <th scope="col">Ano de fab.</th>
-                    <th scope="col">Assentos</th>
+                    <th scope="col">Quant. assentos</th>
 
                     <th scope="col">Opção</th>
                 </tr>
@@ -71,7 +71,7 @@
                             <td>@onibus.Assentos</td>
                             <td>
                                 @if (onibus.StatusOnibus == OnibusStatus.Habilitado) {
-                                    <a class="link" asp-action="Editar" asp-route-id="@onibus.Id"><i class="fa fa-edit"></i></a>
+                                    <a class="link" asp-action="Editar" asp-route-id="@onibus.Id"><i class="fa fa-edit" style="font-size: 12pt;"></i></a>
                                     <a class="link-trash" asp-action="Desabilitar" asp-route-id="@onibus.Id"><i class="fa fa-trash-alt"></i></a>
                                 }
                                 else {

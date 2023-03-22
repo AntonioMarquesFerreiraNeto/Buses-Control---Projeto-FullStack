@@ -1,6 +1,6 @@
 ﻿@model Relatorio
 <div class="alert-primary" style="text-align: center;">
-    <b>Receita: </b>
+    <b><strong>Receita:</strong> </b>
     <i style="margin-right: 20px;">
         Valor total <br> R$ @Html.DisplayFor(x => Model.ValTotReceitas)
     </i>
@@ -9,11 +9,11 @@
     </i>
 </div>
 <div class="alert-warning" style="text-align: center;">
-    <b>Despesa:</b>
+    <b><strong>Despesa:</strong></b>
     <i style="margin-right: 20px;">
-        Valor total <br> @Html.DisplayFor(x => Model.ValTotDespesas)
+        Valor total <br> R$ @Html.DisplayFor(x => Model.ValTotDespesas)
     </i>
     <i>
-        Valor efetuado <br> @Html.DisplayFor(x => Model.ValTotEfetuadoDespesa)
+        Valor efetuado <br> R$ @Html.DisplayFor(x => Model.ValTotEfetuadoDespesa)
     </i>
 </div>

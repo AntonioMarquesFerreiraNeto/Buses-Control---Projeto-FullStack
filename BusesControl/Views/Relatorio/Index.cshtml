@@ -5,13 +5,13 @@
 @if (TempData["MensagemDeSucesso"] != null) {
     <div class="alert alert-success" role="alert">
         @TempData["MensagemDeSucesso"]
-        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert sucesso" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 @if (TempData["MensagemDeErro"] != null) {
     <div class="alert alert-danger" role="alert">
         @TempData["MensagemDeErro"]
-        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> X </button>
+        <button type="button" class="btn btn-danger btn-sm close-alert erro" aria-label="Close"> <i class="fa fa-xmark"></i> </button>
     </div>
 }
 <section class="clientes">
@@ -31,8 +31,11 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Clientes</th>
+                    <th scope="col">Quant. clientes</th>
+                    <th scope="col">Emissão</th>
                     <th scope="col">Vencimento</th>
                     <th scope="col">Valor total</th>
+                    <th scope="col">Andamento do contrato</th>
                     <th scope="col">Download</th>
                 </tr>
             </thead>
@@ -44,8 +47,11 @@
                             <td class="align-content-center justify-content-center">
                                 <a class="consult-clientes btn-view-client2" contrato-id="@item.Id" data-target="#listClientesIndex" data-toggle="modal"><i class="fa fa-users icon-detalhes"></i></a>
                             </td>
+                            <td>@item.ClientesContratos.Count</td>
+                            <td>@Html.DisplayFor(x => item.DataEmissao)</td>
                             <td>@Html.DisplayFor(x => @item.DataVencimento)</td>
                             <td>R$ @Html.DisplayFor(x => @item.ValorMonetario)</td>
+                            <td>@item.ReturnSituacaoContrato()</td>
                             <td>
                                 <a class="link" asp-route-id="@item.Id" asp-action="PdfContrato"><i class="fa fa-download"></i></a>
                             </td>
