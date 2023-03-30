@@ -55,8 +55,6 @@ label {
     margin-left: 3px;
     padding: 7px;
     border-radius: 5px;
-    color: white;
-    background-color: #7ec3f5;
     border: 1px solid #7ec3f5;
 }
 
@@ -67,8 +65,6 @@ label {
     margin-left: 3px;
     padding: 7px;
     border-radius: 5px;
-    color: white;
-    background-color: rgb(252, 201, 51);
     border: 1px solid rgb(252, 201, 51);
 }
 
