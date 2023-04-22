@@ -187,7 +187,7 @@ namespace BusesControl.Repositorio {
             DateTime dateAtual = DateTime.Now.Date;
             foreach (var financeiro in financeiros) {
                 foreach (var parcela in financeiro.Parcelas) {
-                    if (dateAtual > parcela.DataVencimentoParcela && parcela.StatusPagamento != SituacaoPagamento.PagamentoContabilizado) {
+                    if (dateAtual > parcela.DataVencimentoParcela && parcela.StatusPagamento != SituacaoPagamento.PagamentoContabilizado && parcela.Financeiro.FinanceiroStatus != FinanceiroStatus.Inativo) {
                         Parcelas parcelaDB = _bancoContext.Parcelas.FirstOrDefault(x => x.Id == parcela.Id);
                         parcelaDB.StatusPagamento = SituacaoPagamento.Atrasada;
                         _bancoContext.Parcelas.Update(parcelaDB);

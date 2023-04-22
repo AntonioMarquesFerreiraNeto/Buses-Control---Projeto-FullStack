@@ -32,7 +32,7 @@
     <section id="Login">
         <div class="card">
            <div class="card-header">
-                <h5>Conectar</h5>
+                <h5>Conectar agora</h5>
             </div>
             <div class="card-body">
                 <form asp-controller="Logar" asp-action="Index" method="post">
@@ -50,14 +50,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Informe sua senha." maxlength="14" asp-for="Senha" id="senha">
+                        <input type="password" class="form-control" placeholder="Informe sua senha." asp-for="Senha" id="senha">
                         <small class="errorMsg">
                             @Html.ValidationMessageFor(x => x.Senha)
                         </small>
                     </div>
-                     <small><input type="checkbox" onclick="OcultDisplay()"> Mostrar senha</small>
+                    <small class="mostrar-senha-color"><input type="checkbox" onclick="OcultDisplay()"> Mostrar senha</small>
                     <div class="form-group">
-                        <button type="submit" class="btn float-right login_btn">Logar</button>
+                        <button type="submit" class="btn float-right login_btn">Autenticar</button>
                     </div>
                 </form>
             </div>

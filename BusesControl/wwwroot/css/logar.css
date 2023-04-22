@@ -5,7 +5,7 @@ body{
     height: 100%;
     margin: 0;
     padding: 0;
-    background-image: url(Imagens/back.png);
+    background-image: url(Imagens/bus-2546383_1920.jpg);
 }
 .link-home {
     position: fixed;
@@ -92,11 +92,11 @@ body{
 
 .form-control{
     font-size: 11pt;
-    height: 32px;
+    height: 40px;
 }
 .errorMsg {
     position: absolute;
-    top: 27px;
+    top: 36px;
     right: 1px;
     font-size: 9pt;
     color: red;
@@ -111,18 +111,23 @@ body{
 .card {
     flex: auto auto auto;
     margin: 5px;
-    background-color: #ffffff !important;
-    box-shadow: 1px 1px 1px #000000b2;
+    background-color: #1c1c1ce9 !important;
+    box-shadow: 1px 1px 1px #00000090;
 }
 .card-header h5 {
-    font-size: 17pt;
-    font-weight: normal;
-    color: darkslategray;
+    color: whitesmoke;
+    font-size: 21px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 /*Caixa de entrada de usuário*/
 .input-group-prepend span {
     background-color: rgb(0, 34, 142);
-    color: #ffffff;
+    color: #ffff;
     border: 0 !important;
 }
 input:focus {
@@ -132,7 +137,7 @@ input:focus {
 }
 /*Caixa de lembrar de mim*/
 .remember {
-    color: #000000dc;
+    color: white;
 }
 .remember input {
     width: 20px;
@@ -142,18 +147,27 @@ input:focus {
 }
 /*botão Login*/
 .login_btn {
-    font-size: 11pt;
-    padding: 4px;
-    width: 40%;
-    color: rgb(0, 34, 142);
-    border: 1px solid rgb(0, 34, 142);
-    background-color: aliceblue;
-    transition: 1.3s;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 23px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-top: 10px;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
-.login_btn:hover{
-    background-color: rgb(0, 04, 112);
-    color: white;
-}
+
+    .login_btn:hover {
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
+        color: black;
+    }
 .links {
     color: #000000dc;
 }
@@ -163,7 +177,10 @@ input:focus {
 #esque{
     color: #2b65c2;
 }
-@media(min-width: 0px){
+.mostrar-senha-color {
+    color: white;
+}
+@media(min-width: 0px) {
     .card{
         width: 280px;
     }
@@ -187,10 +204,10 @@ input:focus {
 }
 @media(min-width: 800px){
     .card{
-        width: 360px;
+        width: 410px;
     }
     .alert {
-        width: 360px;
+        width: 410px;
     }
     .input-group-prepend span {
         width: 40px;
@@ -204,10 +221,10 @@ input:focus {
 }
 @media(min-width: 1700px){
     .card{
-        width: 470px;
+        width: 570px;
     }
     .alert {
-        width: 470px;
+        width: 570px;
     }
 }
 @media(min-width: 2500px){

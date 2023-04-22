@@ -47,7 +47,7 @@
                             <i class="fas fa-bus"></i>
                         </span>
                     </div>
-                    <select id="onibus" class="form-control campUser" asp-for="Contrato.OnibusId">
+                    <select id="onibus" class="form-control" asp-for="Contrato.OnibusId">
                         <optgroup label="Selecione o ônibus">
                             @if (Model.OnibusList != null || Model.OnibusList.Any()) {
                                 <option value="">Selecionar ônibus</option>
@@ -74,7 +74,7 @@
                             <i class="fas fa-user-tie"></i>
                         </span>
                     </div>
-                    <select id="motorista" class="form-control campUser" asp-for="Contrato.MotoristaId">
+                    <select id="motorista" class="form-control" asp-for="Contrato.MotoristaId">
                         <optgroup label="Selecione o motorista">
                             @if (Model.MotoristaList != null && Model.MotoristaList.Any()) {
                                 <option value="">Selecionar motorista</option>
@@ -156,7 +156,7 @@
                 </div>
                 <div class="col-md-12 input-group form-group form-it">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">
+                        <span class="input-group-text" id="select-rota">
                             <i class="fa fa-road"></i>
                         </span>
                     </div>
@@ -169,12 +169,12 @@
                     </div>
                 </div>
                 <div class="col-md-12 input-group form-group form-it">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
+                    <div class="input-group-prepend select-group">
+                        <span class="input-group-text" id="select-group">
                             <i class="fas fa-user"></i>
                         </span>
                     </div>
-                    <select class="form-control campUser" id="ClienteFisicoList">
+                    <select class="custom-select" id="ClienteFisicoList">
                         <optgroup label="Selecionar cliente">
                             @if (Model.ClienteFisicoList != null || Model.ClienteFisicoList.Any()) {
                                 <option value="">Selecionar clientes para o contrato</option>

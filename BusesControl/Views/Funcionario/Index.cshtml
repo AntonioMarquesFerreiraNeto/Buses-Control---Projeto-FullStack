@@ -60,7 +60,7 @@
                 @if (Model != null && Model.Any()) {
                     foreach (Funcionario funcionario in Model) {
                         <tr class="row-hover">
-                            <th scope="row">@funcionario.Id</th>
+                            <td scope="row">@funcionario.Id</td>
                             <td>@funcionario.Name</td>
                             <td>@funcionario.ReturnTelefoneFuncionario()</td>
                             @if (funcionario.Cargos == CargoFuncionario.Assistente) {

@@ -1,6 +1,8 @@
-﻿using BusesControl.Helper;
+﻿using BusesControl.Data;
+using BusesControl.Helper;
 using BusesControl.Models;
 using BusesControl.Repositorio;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -10,12 +12,16 @@ namespace BusesControl.Controllers {
         private readonly ISection _section;
         private readonly IEmail _email;
         private readonly IFinanceiroRepositorio _financeiroRepositorio;
-        public LogarController(IFuncionarioRepositorio funcionarioRepositorio, ISection section, IEmail email, IFinanceiroRepositorio financeiroRepositorio) {
+        private readonly CreateUsuarioContext _createUsuarioContext; 
+
+        public LogarController(IFuncionarioRepositorio funcionarioRepositorio, ISection section, IEmail email, IFinanceiroRepositorio financeiroRepositorio, CreateUsuarioContext createUsuarioContext) {
             _funcionarioRepositorio = funcionarioRepositorio;
             _section = section;
             _email = email;
             _financeiroRepositorio = financeiroRepositorio;
+            _createUsuarioContext = createUsuarioContext;
         }
+
         public ActionResult Index() {
             ViewData["Title"] = "Autenticar";
             _financeiroRepositorio.TaskMonitorParcelas();

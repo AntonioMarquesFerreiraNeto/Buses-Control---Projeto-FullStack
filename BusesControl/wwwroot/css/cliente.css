@@ -273,11 +273,6 @@ input#form-control {
     margin-bottom: 10px;
 }
 
-.table {
-    background-color: #ffff;
-    border: 1px solid black;
-    width: 90%;
-}
 /*Caixa de entrada de usuário*/
 .input-group-prepend span {
     background-color: rgb(0, 34, 142);
@@ -338,32 +333,6 @@ input:focus {
     justify-content: space-between;
 }
 
-thead {
-    color: #ffffffea;
-    text-align: center;
-    background-image: url(Imagens/newBackTable.jpg);
-}
-
-th {
-    font-size: 10pt;
-    border: 1px solid #b5b5b5;
-    text-align: center;
-    padding: 0;
-}
-
-td {
-    font-size: 10pt;
-    border: 1px solid #b5b5b5;
-    text-align: center;
-    padding: 0;
-}
-
-.pagination {
-    margin-top: -10px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
 
 .page-link {
     text-align: center;

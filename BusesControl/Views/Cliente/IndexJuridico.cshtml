@@ -52,18 +52,18 @@
         <table id="table-cliente" class="table shadow-sm p-3 mb-5 bg-white rounded">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nome fantasia</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Opção</th>
+                    <th style="font-size: 9pt;" scope="col">Id</th>
+                    <th style="font-size: 9pt;" scope="col">Nome fantasia</th>
+                    <th style="font-size: 9pt;" scope="col">Telefone</th>
+                    <th style="font-size: 9pt;" scope="col">Cidade</th>
+                    <th style="font-size: 9pt;" scope="col">Opção</th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model != null && Model.Any()) {
                     foreach (PessoaJuridica cliente in Model) {
                         <tr class="row-hover">
-                            <th scope="row">@cliente.Id</th>
+                            <td scope="row">@cliente.Id</td>
                             <td>@cliente.RazaoSocial</td>
                             <td>@cliente.ReturnTelefoneCliente()</td>
                             <td>@cliente.Cidade</td>

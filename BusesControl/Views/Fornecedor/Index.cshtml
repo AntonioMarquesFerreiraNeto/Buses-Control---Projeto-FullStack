@@ -63,7 +63,7 @@
                 @if (Model != null && Model.Any()) {
                     foreach (FornecedorFisico fornecedor in Model) {
                         <tr class="row-hover">
-                            <th scope="row">@fornecedor.Id</th>
+                            <td scope="row">@fornecedor.Id</td>
                             <td>@fornecedor.Name</td>
                             <td>@fornecedor.ReturnTelefoneCliente()</td>
                             <td>@fornecedor.Cidade</td>

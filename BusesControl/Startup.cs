@@ -38,6 +38,7 @@ namespace BusesControl {
             services.AddScoped<IFinanceiroRepositorio, FinanceiroRepositorio>();
             services.AddScoped<IRelatorioRepositorio, RelatorioRepositorio>();
             services.AddScoped<IFornecedorRepositorio, FornecedorRepositorio>();
+            services.AddScoped<CreateUsuarioContext>();
             services.AddSession(o => {
                 o.Cookie.HttpOnly = true;
                 o.Cookie.IsEssential = true;

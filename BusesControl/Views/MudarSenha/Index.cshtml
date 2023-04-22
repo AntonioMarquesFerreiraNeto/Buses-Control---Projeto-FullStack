@@ -49,7 +49,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Informe sua senha atual." maxlength="14" asp-for="SenhaAtual" id="senha_atual">
+                        <input type="password" class="form-control" placeholder="Informe sua senha atual." asp-for="SenhaAtual" id="senha_atual">
                         <small class="errorMsg">
                             @Html.ValidationMessageFor(x => x.SenhaAtual)
                         </small>
@@ -58,7 +58,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Informe a nova senha." maxlength="14" asp-for="NovaSenha" id="senha">
+                        <input type="password" class="form-control" placeholder="Informe a nova senha." asp-for="NovaSenha" id="senha">
                         <small class="errorMsg">
                             @Html.ValidationMessageFor(x => x.NovaSenha)
                         </small>
@@ -67,7 +67,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Confirme a nova senha." maxlength="14" asp-for="ConfirmarSenha" id="confirm_senha">
+                        <input type="password" class="form-control" placeholder="Confirme a nova senha." asp-for="ConfirmarSenha" id="confirm_senha">
                         <small class="errorMsg">
                             @Html.ValidationMessageFor(x => x.ConfirmarSenha)
                         </small>

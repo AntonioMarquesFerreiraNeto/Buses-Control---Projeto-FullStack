@@ -214,11 +214,11 @@
                 @if (Model.Contrato.Aprovacao != StatusAprovacao.Aprovado) {
                     <div class="col-md-12 input-group form-group form-it">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">
+                            <span class="input-group-text" id="select-group">
                                 <i class="fas fa-user"></i>
                             </span>
                         </div>
-                        <select class="form-control campUser" id="ClienteFisicoList">
+                        <select class="custom-select" id="ClienteFisicoList">
                             <optgroup label="Selecionar cliente">
                                 @if (Model.ClienteFisicoList != null || Model.ClienteFisicoList.Any()) {
                                     <option value="">Selecionar clientes para o contrato</option>

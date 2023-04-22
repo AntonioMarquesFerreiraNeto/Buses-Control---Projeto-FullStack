@@ -1,5 +1,60 @@
 ﻿@charset "utf-8";
 @charset "UTF-8";
+.custom-select {
+    position: relative;
+    display: inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #f2f2f2, #e0e0e0);
+}
+
+    .custom-select select {
+        background: none;
+        font-size: 16px;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+        .custom-select select::-ms-expand {
+            display: none;
+        }
+
+    .custom-select::after {
+        content: "\f107";
+        font-family: "FontAwesome";
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #555;
+        transition: all 0.4s;
+    }
+
+    .custom-select:hover::after {
+        color: #222;
+    }
+
+    .custom-select select:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    .custom-select select:focus {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+        .custom-select select:focus + .custom-select::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+    .custom-select:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
 
 .sectionCliente {
     margin: 1px 1px 1px 1px;
@@ -9,10 +64,12 @@
     margin-top: -10px;
     margin-bottom: 30px;
 }
+
 .link-analise {
     color: rgb(36, 231, 243);
     margin: 10px;
 }
+
 .span-style-alert-analise {
     margin: 0;
     padding: 0;
@@ -25,6 +82,7 @@
     -o-animation: span-style-alert-analise .75s linear infinite;
     animation: span-style-alert-analise .75s linear infinite;
 }
+
 @keyframes span-style-alert-analise {
     0% {
         opacity: 1;
@@ -38,6 +96,7 @@
         opacity: 1;
     }
 }
+
 .link-button {
     border: none;
     background-color: transparent;
@@ -346,8 +405,8 @@ label {
     font-weight: bold;
     cursor: pointer;
     background-color: #0091ff;
-    width: 31px;
-    height: 26px;
+    width: 33px;
+    height: 28px;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -552,6 +611,9 @@ input#form-control {
     border: 1px solid black;
     width: 90%;
 }
+.input-group-text{
+    height: 100%;
+}
 /*Caixa de entrada de usuário*/
 .input-group-prepend span {
     background-color: #2b65c2;
@@ -560,7 +622,82 @@ input#form-control {
     height: 33px;
     width: 40px;
 }
+#select-group{
+    height: 100%;
+}
+#select-rota{
+    height: 100%;
+}
+.custom-select {
+    position: relative;
+    width: 200px;
+}
 
+    .custom-select select {
+        background-color: #fff;
+        border: none;
+        border-radius: 5px;
+        color: #555;
+        cursor: pointer;
+        font-size: 16px;
+        height: 40px;
+        padding: 10px 15px;
+        position: relative;
+        transition: all 0.4s ease;
+        width: 100%;
+        z-index: 1;
+    }
+
+        .custom-select select:hover {
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    .custom-select:after {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #555;
+        content: "";
+        height: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        z-index: 0;
+    }
+
+    .custom-select:hover:after {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #ddd;
+        content: "";
+        height: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        z-index: 0;
+    }
+
+    .custom-select select:focus {
+        outline: none;
+    }
+
+    .custom-select select option {
+        background-color: #fff;
+        border: none;
+        color: #555;
+        font-size: 16px;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+    }
+
+        .custom-select select option:hover {
+            background-color: #f2f2f2;
+        }
 .rota span {
     background-color: #2b65c2;
     color: #ffffff;
@@ -657,32 +794,6 @@ input:focus {
     justify-content: space-between;
 }
 
-thead {
-    color: #ffffffea;
-    text-align: center;
-    background-image: url(Imagens/newBackTable.jpg);
-}
-
-th {
-    font-size: 10pt;
-    border: 1px solid #b5b5b5;
-    text-align: center;
-    padding: 0;
-}
-
-td {
-    font-size: 10pt;
-    border: 1px solid #b5b5b5;
-    text-align: center;
-    padding: 0;
-}
-
-.pagination {
-    margin-top: -10px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
 
 .page-link {
     text-align: center;

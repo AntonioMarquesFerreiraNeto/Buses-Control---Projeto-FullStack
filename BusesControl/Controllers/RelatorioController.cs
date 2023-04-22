@@ -195,7 +195,7 @@ namespace BusesControl.Controllers {
                 doc.Add(titulo);
                 doc.Add(paragrofoJustificado);
                 doc.Add(tabela);
-                if (contrato.Rescisoes != null || contrato.Rescisoes.Any()) {
+                if (contrato.Rescisoes.Count > 0) {
                     Paragraph tituloJustificado = new Paragraph("",
                     new Font(fonteBase, 13, Font.NORMAL, BaseColor.DARK_GRAY));
                     tituloJustificado.Alignment = Element.ALIGN_CENTER;

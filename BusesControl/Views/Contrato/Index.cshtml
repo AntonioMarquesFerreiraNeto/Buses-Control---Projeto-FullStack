@@ -215,6 +215,13 @@
 <script src="~/js/jquery.min.js"></script>
 <script src="~/js/mascaraMoney.js"></script>
 <script src="~/Js copy/MascarDate.js"></script>
+<script>
+    // Obtém o elemento input de pesquisa
+    var searchInput = document.querySelector('.dataTables_filter input');
+
+    // Define o atributo placeholder no elemento input de pesquisa
+    searchInput.placeholder = 'Pesquisar...';
+</script>
 @section Scripts{
     <script>
         $(document).ready(function () {
@@ -238,7 +245,7 @@
                     "sLoadingRecords": "Carregando...",
                     "sProcessing": "Processando...",
                     "sZeroRecords": "Sua pesquisa não encontrou nenhum registro correspondente.",
-                    "sSearch": "Pesquisar:  ",
+                    "sSearch": "Pesquisar: ",
                     "oPaginate": {
                         "sNext": "Próximo",
                         "sPrevious": "Anterior",
